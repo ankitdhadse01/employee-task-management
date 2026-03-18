@@ -6,80 +6,92 @@ import jakarta.persistence.*;
 @Table(name = "employee")
 public class Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "email")
-    private String email;
+	@Column(name = "email")
+	private String email;
 
-    @Column(name = "password")
-    private String password;
+	
 
-    @Column(name = "role")
-    private String role;
+	@Column(name = "role")
+	private String role;
 
-    // Constructors
-    public Employee() {}
+	// 🔴 NEW FIELD - SIRF YEH ADD KARNA HAI
+	@Column(name = "profile_photo")
+	private String profilePhoto;
+	
+	@Column(name ="password", nullable = false)
+	private String password;
 
-    public Employee(String name, String email, String password, String role) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
+	// Constructors
+	public Employee() {
+	}
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+	public Employee(String name, String email, String password, String role) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	// Getters and Setters
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getRole() {
-        return role;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+	public String getRole() {
+		return role;
+	}
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                '}';
-    }
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	// 🔴 NEW GETTER AND SETTER
+	public String getProfilePhoto() {
+		return profilePhoto;
+	}
+
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee{" + "id=" + id + ", name='" + name + '\'' + ", email='" + email + '\'' + ", role='" + role
+				+ '\'' + ", profilePhoto='" + profilePhoto + '\'' + '}';
+	}
 }

@@ -10,16 +10,20 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Task;
 import com.example.demo.repository.TaskRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+    
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+        return taskRepository.findAll();  // ✅ YE IMPLEMENT HONA CHAHIYE
     }
 
     @Override
@@ -67,26 +71,16 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByEmployeeIdAndStatus(employeeId, "PENDING");
     }
     
-    // 🔴 MANUAL JSON PARSING - NO JACKSON NEEDED
     @Override
     public Map<String, String> getResourceLinksAsMap(Task task) {
-        Map<String, String> links = new HashMap<>();
         try {
-            String json = task.getResourceLinks();
-            if (json != null && !json.isEmpty()) {
-                // Remove { } and quotes
-                json = json.replace("{", "").replace("}", "").replace("\"", "");
-                String[] pairs = json.split(",");
-                for (String pair : pairs) {
-                    String[] keyValue = pair.split(":");
-                    if (keyValue.length == 2) {
-                        links.put(keyValue[0].trim(), keyValue[1].trim());
-                    }
-                }
+            if (task.getResourceLinks() != null && !task.getResourceLinks().isEmpty()) {
+                return objectMapper.readValue(task.getResourceLinks(), 
+                    new TypeReference<Map<String, String>>() {});
             }
         } catch (Exception e) {
-            System.err.println("Error parsing resource links: " + e.getMessage());
+            e.printStackTrace();
         }
-        return links;
+        return new HashMap<>();
     }
 }

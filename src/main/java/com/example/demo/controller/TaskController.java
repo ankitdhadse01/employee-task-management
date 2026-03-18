@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.entity.Employee;
 import com.example.demo.entity.Task;
+import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.service.NotificationService;
 import com.example.demo.service.TaskService;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003", "http://localhost:3004"})
@@ -17,43 +20,53 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+    
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    
+    @Autowired
+    private NotificationService notificationService;  // 🔴 ADD THIS
 
-    // GET all tasks (Admin view)
     @GetMapping
     public List<Task> getAllTasks() {
         return taskService.getAllTasks();
     }
 
-    // GET tasks by employee ID (Employee view)
     @GetMapping("/employee/{id}")
     public List<Task> getEmployeeTasks(@PathVariable Long id) {
         return taskService.getEmployeeTasks(id);
     }
 
-    // POST create new task (Admin only)
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    public ResponseEntity<?> createTask(@RequestBody Task task) {
+        try {
+            Task savedTask = taskService.createTask(task);
+            
+            // 🔴 Send email notification to employee
+            Employee employee = employeeRepository.findById(task.getEmployeeId()).orElse(null);
+            if (employee != null) {
+                notificationService.sendTaskAssignmentEmail(savedTask, employee);
+                System.out.println("📧 Assignment email sent to " + employee.getEmail());
+            }
+            
+            return ResponseEntity.ok(savedTask);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error creating task: " + e.getMessage());
+        }
     }
 
-    // PUT update task status (Both Admin and Employee)
-    // 🔴 WHY THIS WORKS: When employee marks complete, status updates here
     @PutMapping("/status/{id}")
     public ResponseEntity<?> updateTaskStatus(@PathVariable Long id, @RequestBody Task task) {
         try {
             Task updatedTask = taskService.updateTaskStatus(id, task.getStatus());
-            if (updatedTask != null) {
-                return ResponseEntity.ok(updatedTask);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            return ResponseEntity.ok(updatedTask);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error updating status: " + e.getMessage());
         }
     }
 
-    // DELETE task (Admin only)
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable Long id) {
         try {
@@ -65,7 +78,6 @@ public class TaskController {
         }
     }
 
-    // GET task by ID
     @GetMapping("/{id}")
     public ResponseEntity<?> getTaskById(@PathVariable Long id) {
         try {
@@ -81,7 +93,6 @@ public class TaskController {
         }
     }
 
-    // PUT update entire task (Admin only - for reassigning)
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody Task task) {
         try {
