@@ -13,47 +13,35 @@
 	<artifactId>Employee_Task_Management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Employee_Task_Management</name>
-	<description>Demo project for Spring Boot</description>
-	<url />
-	<licenses>
-		<license />
-	</licenses>
-	<developers>
-		<developer />
-	</developers>
-	<scm>
-		<connection />
-		<developerConnection />
-		<tag />
-		<url />
-	</scm>
+	<description>Employee Task Management System with Spring Boot</description>
 	<properties>
-		<java.version>25</java.version>
+		<java.version>17</java.version>  <!-- 🔴 JAVA 17 (STABLE) -->
 	</properties>
+	
 	<dependencies>
-		<!-- Spring Boot Starters -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+		<!-- ========================================= -->
+		<!-- CORE SPRING BOOT STARTERS -->
+		<!-- ========================================= -->
 		
+		<!-- Web MVC - REST APIs -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
+		<!-- JPA / Hibernate - Database -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
-		<!-- 🔴 EMAIL NOTIFICATION DEPENDENCY - ADD THIS -->
+		
+		<!-- Email -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-
-		<!-- DevTools -->
+		
+		<!-- DevTools - Auto restart -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -61,39 +49,99 @@
 			<optional>true</optional>
 		</dependency>
 		
-		<!-- PostgreSQL -->
+		<!-- ========================================= -->
+		<!-- DATABASE -->
+		<!-- ========================================= -->
+		
+		<!-- PostgreSQL Driver -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- Testing -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!-- ========================================= -->
+		<!-- FILE UPLOAD -->
+		<!-- ========================================= -->
 		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<!-- Jackson for JSON -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-
-		<!-- File Upload -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.11.0</version>
 		</dependency>
-
+		
+		<!-- ========================================= -->
+		<!-- JSON PROCESSING -->
+		<!-- ========================================= -->
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		
+		<!-- ========================================= -->
+		<!-- PDF GENERATION - iText 7 -->
+		<!-- ========================================= -->
+		
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext7-core</artifactId>
+			<version>7.2.5</version>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- iText Kernel (Core) -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>kernel</artifactId>
+			<version>7.2.5</version>
+		</dependency>
+		
+		<!-- iText Layout -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>layout</artifactId>
+			<version>7.2.5</version>
+		</dependency>
+		
+		<!-- iText IO -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>io</artifactId>
+			<version>7.2.5</version>
+		</dependency>
+		
+		<!-- ========================================= -->
+		<!-- EXCEL GENERATION - Apache POI -->
+		<!-- ========================================= -->
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.2.3</version>
+		</dependency>
+		
+		<!-- Apache POI Core -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>5.2.3</version>
+		</dependency>
+		
+		<!-- ========================================= -->
+		<!-- TESTING -->
+		<!-- ========================================= -->
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>EmployeManagement</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -104,5 +152,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
