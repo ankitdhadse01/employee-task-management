@@ -25,7 +25,7 @@ public class Employee {
 	@Column(name = "profile_photo")
 	private String profilePhoto;
 	
-	@Column(name ="password", nullable = false)
+	@Column(name ="password", nullable = true)
 	private String password;
 
 	// Constructors
