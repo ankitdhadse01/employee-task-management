@@ -12,12 +12,12 @@ import com.example.demo.service.EmployeeService;
 
 public class AuthController {
 
- @Autowired
- EmployeeService service;
+	@Autowired
+	EmployeeService service;
 
- @PostMapping("/login")
- public Employee login(@RequestBody Employee e){
-  return service.login(e);
- }
+	@PostMapping("/login")
+	public Employee login(@RequestBody Employee e) {
+		return service.login(e);
+	}
 
 }
